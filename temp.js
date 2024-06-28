@@ -1,32 +1,31 @@
-
-// @title: the real football
-// @tags: ['football', 'soccer']
-// @addedOn: 2022-07-26
-// @author: Nikhil
+/*
+@title: the real football
+@author: nikhil
+@tags: ['soccer','football']
+@addedOn: 2024-00-00
+*/
 
 const player = "p";
 const ball = "b";
-const goalpost = "g";
+const goalposta = "ga";
+const goalpostb = "gb";
 const hurdle = "w";
-const move = tune`
-500: B5^500 + E5^500,
-15500`;
 
-
+//legend
 setLegend(
   [ player, bitmap`
-......FFC.......
-....CFCCCF......
-....FCCC2CC.....
+......CCC.......
+....CCCCCC......
+....CCCC2CC.....
 ....C2020CC.....
 .....22222CC....
 ......222.......
-....757575......
-....575757......
-....257572......
-....275752......
-....193931......
-.....3939.......
+....777777......
+....777777......
+....277772......
+....277772......
+....155551......
+.....5555.......
 .....2..2.......
 .....2..2.......
 .....L..L.......
@@ -48,10 +47,27 @@ setLegend(
 .0222LLL20......
 ..002LL00.......
 ....000.........`],
-  [ goalpost, bitmap`
+  [ goalposta, bitmap`
 .......00000....
 .......0LLL00...
 .......0000L0...
+..........0L0...
+..........0L0...
+..........0L0...
+..........0L0...
+..........0L0...
+..........0L0...
+..........0L0...
+..........0L0...
+..........0L0...
+..........0L0...
+..........0L0...
+..........0L0...
+..........000...`],
+  [ goalpostb, bitmap`
+..........0L0...
+..........0L0...
+..........0L0...
 ..........0L0...
 ..........0L0...
 ..........0L0...
@@ -85,12 +101,12 @@ setLegend(
 );
 
 
-// create game levels
-let level = 0; // this tracks the level we are on
+// levels
+let level = 0; 
 const levels = [
   map`
-..p.
-.b.g
+....
+p...
 ....`,
   map`
 p..
@@ -117,21 +133,15 @@ p.w.
 ..bg`
 ];
 
-// set the map displayed to the current level
+
 const currentLevel = levels[level];
 setMap(currentLevel);
 
-setSolids([ player, box, wall ]); // other sprites cannot go inside of these sprites
+setSolids([ player, ball, hurdle ]); 
 
-// allow certain sprites to push certain other sprites
-setPushables({
-  [player]: [ box ],
-  [box]: [ box ]
-});
-
-// inputs for player movement control
+// movement of player
 onInput("s", () => {
-  getFirst(player).y += 1; // positive y is downwards
+  getFirst(player).y += 1; 
   playTune(move);
 });
 
@@ -149,37 +159,34 @@ onInput("a", () => {
     getFirst(player).x -= 1;
     playTune(move);
 });
+onInput("s", () => {
+  getFirst(player).y += 1
+})
 
-// input to reset level
 onInput("j", () => {
-  const currentLevel = levels[level]; // get the original map of the level
+  const currentLevel = levels[level];
 
-  // make sure the level exists before we load it
-  if (currentLevel !== undefined) {
+if (currentLevel !== undefined) {
     clearText("");
     setMap(currentLevel);
-  }
+ }
 });
 
-// these get run after every input
-afterInput(() => {
-  // count the number of tiles with goals
-  const targetNumber = tilesWith(goal).length;
-  
-  // count the number of tiles with goals and boxes
-  const numberCovered = tilesWith(goal, box).length;
 
-  // if the number of goals is the same as the number of goals covered
-  // all goals are covered and we can go to the next level
+afterInput(() => {
+  
+  const targetNumber = tilesWith(goalpost1,goalpost2).length;
+  
+  const numberCovered = tilesWith(goalpost1, goalpost2, ball).length;
+
+ 
   if (numberCovered === targetNumber) {
-    // increase the current level number
+   
     level = level + 1;
 
     const currentLevel = levels[level];
 
-    // make sure the level exists and if so set the map
-    // otherwise, we have finished the last level, there is no level
-    // after the last level
+    
     if (currentLevel !== undefined) {
       setMap(currentLevel);
     } else {
