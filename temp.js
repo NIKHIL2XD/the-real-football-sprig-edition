@@ -1,8 +1,8 @@
 /*
-@title: a little puzzle
+@title: getting_started
 @tags: ['beginner', 'tutorial']
 @addedOn: 2022-07-26
-@author: 
+@author: leo, edits: samliu, belle, kara
 
 Check the tutorial in the bottom right, the run button is in the top right.
 Make sure to remix this tutorial if you want to save your progress!
@@ -13,7 +13,9 @@ const player = "p";
 const box = "b";
 const goal = "g";
 const wall = "w";
-
+const move = tune`
+500: B5^500 + E5^500,
+15500`;
 // assign bitmap art to each sprite
 setLegend(
   [ player, bitmap`
@@ -86,6 +88,7 @@ setLegend(
 0000000000000000`]
 );
 
+
 // create game levels
 let level = 0; // this tracks the level we are on
 const levels = [
@@ -100,8 +103,8 @@ p..
   map`
 p.wg
 .bw.
-..w.
-..w.`,
+....
+.w..`,
   map`
 p...
 ...b
@@ -126,16 +129,29 @@ setSolids([ player, box, wall ]); // other sprites cannot go inside of these spr
 
 // allow certain sprites to push certain other sprites
 setPushables({
-  [player]: []
+  [player]: [ box ],
+  [box]: [ box ]
 });
 
 // inputs for player movement control
 onInput("s", () => {
   getFirst(player).y += 1; // positive y is downwards
+  playTune(move);
 });
 
 onInput("d", () => {
   getFirst(player).x += 1;
+  playTune(move);
+});
+
+onInput("w", () => {
+    getFirst(player).y -= 1;
+    playTune(move);
+});
+
+onInput("a", () => {
+    getFirst(player).x -= 1;
+    playTune(move);
 });
 
 // input to reset level
@@ -171,9 +187,7 @@ afterInput(() => {
     if (currentLevel !== undefined) {
       setMap(currentLevel);
     } else {
-      addText("you win!", { y: 4, color: color`3` });
+      addText("you win!", { y: 4, color: color`H` });
     }
   }
 });
-
-
