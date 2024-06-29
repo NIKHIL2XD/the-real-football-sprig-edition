@@ -340,7 +340,7 @@ onInput("s", () => {
 
 onInput("j", () => {
   const currentLevel = levels[level];
-
+  playTune(tunes.reset)
 if (currentLevel !== undefined) {
     clearText("");
     setMap(currentLevel);
