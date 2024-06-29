@@ -123,6 +123,12 @@ DDDDDDDDDDDDDDDD`]
 let level = 0; 
 const levels = [
   map`
+llllllll
+llllllll
+lpblllgl
+llllllll
+llllllll`,
+  map`
 eeeeeeeeeeeeee
 elllwllwlwlwle
 elllwllwlwlwle
@@ -133,36 +139,67 @@ elllwllwlwlwle
 elllwllwlwllle
 eeeeeeeeeeeeee`,
   map`
-....w...w...w.w.
-....w.w.....w.w.
-....w.w.w.w.w.w.
-........w.w.w.w.
-....w.w.w.....w.
-p.b.w.w.w......g
-....w.w.w.w.w.w.
-....w.....w.w.w.
-....w.w...w.w.w.
-....w.w.w.w.w.w.
-....w.w.w.w.w.w.`,
+eeeeeeeeeeeeeeee
+elllwlwlwlllwlle
+elllwlwlllllwlle
+elllwlllllwlwlle
+elllwlwlwlllllge
+epblwlwlwlllwlle
+elllwlwlwlllwlle
+elllllllwlllwlle
+elllwlllwlllwlle
+eeeeeeeeeeeeeeee`,
   map`
-p.wg
-.bw.
-....
-.w..`,
+eeeeeeeeeeeeeeeeee
+elllwlllwlwlwlwlle
+elllwlwlwlwlwlwlle
+elllllllwlwlllwlle
+epblwlwlwlwlwlwlle
+elllwlwlllllllwlle
+elllllllllwlwlwlle
+elllllwlwlwlllllge
+elllwlwlllwlwlwlle
+eeeeeeeeeeeeeeeeee`,
   map`
-p...
-...b
-...b
-.bbg`,
+eeeeeeeeeeeeeeeeeee
+ellllwlwlwlwlwlwlle
+elpblllwlllwlllllle
+ellllllllwlllllwlle
+ellllwlwlwlwlwlwlle
+ellllwlllllwlwlwlle
+ellllwlwlwlwlwlwlle
+ellllllllwlwlwlllge
+ellllwlllllllllwlle
+ellllwlwlwlllwlwlle
+eeeeeeeeeeeeeeeeeee`,
   map`
-...
-.p.
-...`,
+eeeeeeeeeeeeeeeeee
+elllwlllllwlllwlle
+elllllwlwlllllllle
+elllwlwlllllwlwlle
+epblllllwlwlwlwlle
+elllwlwlwlwlllllle
+elllllwlwlllwlllge
+elllllllllwlwlwlle
+elllwlwlllwlllwlle
+eeeeeeeeeeeeeeeeee`,
 ];
 
+setBackground(grass)
+
+addText("The Real Football", { y: 2, color: color`2` })
 
 const currentLevel = levels[level];
+
 setMap(currentLevel);
+addText("Dodge the hurldes", { y: 4, color: color`8` });
+addText("And score a goal", { y: 5, color: color`8` });
+addText("use w a s d to move", { y: 10, color: color`9` });
+addText("Press j to reset", { y: 11, color: color`9` });
+afterInput(() => {
+  clearText();
+  const numberCovered = tilesWith(player, ball).length;
+})
 
 setSolids([ player, ball, hurdle, bounds]); 
 
@@ -184,8 +221,8 @@ onInput("a", () => {
     });
 
 onInput("s", () => {
-  getFirst(player).y += 1
-})
+    getFirst(player).y += 1;
+    });
 
 onInput("j", () => {
   const currentLevel = levels[level];
@@ -211,14 +248,18 @@ afterInput(() => {
   if (numberCovered === targetNumber) {
    
     level = level + 1;
-
     const currentLevel = levels[level];
 
+
+    if (level == 0) {
+    addText("To reset press j", { y: 4, color: color`H` });
+  }
     
     if (currentLevel !== undefined) {
       setMap(currentLevel);
     } else {
-      addText("you win!", { y: 4, color: color`H` });
+      addText("Game Over!", { y: 4, color: color`3` });
+      addText("Thanks for playing", { y: 6, color: color`3` });
     }
   }
 });
