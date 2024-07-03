@@ -11,8 +11,6 @@ const goalpost = "g";
 const hurdle = "w";
 const grass = "l";
 const bounds = "e";
-const key = "k";
-const door = "d";
 
 //legend
 setLegend(
@@ -86,39 +84,38 @@ setLegend(
 4444440L04444444`],
   [ grass, bitmap`
 4444444444444444
+44444444D44444D4
 4444444444444444
 4444444444444444
+444D444444444444
 4444444444444444
 4444444444444444
+4444444D44444444
+D44444444444D444
 4444444444444444
 4444444444444444
+444D444444444444
 4444444444444444
+444444444D4444D4
 4444444444444444
-4444444444444444
-4444444444444444
-4444444444444444
-4444444444444444
-4444444444444444
-4444444444444444
-4444444444444444`],
+4444D44444444444`],
   [ bounds, bitmap`
 DDDDDDDDDDDDDDDD
+DDDDDDDDDD4DDDDD
+DDD4DDDDD4DDDDD4
+DD4DDDDDDDDDDD4D
 DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDD`]
-TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+DDDDDD4DDDDDDDDD
+DDDDD4DDDDD4DDDD
+4DDDDDDDDD4DDDD4
+DDDDDDDDDDDDDD4D
+DDD4DDDDDDDDDDDD
+DD4DDDDD4DDDDDDD
+DDDDDDD4DDDDDDDD
+DDDDDDDDDDDD4DDD
+DDDDDDDDDDD4DDDD
+DDDD4DDDDDDDDDDD
+DDD4DDDDDDDDDDDD`]
 );
 
 
@@ -306,32 +303,6 @@ afterInput(() => {
     }
 });
 
-
-
-
-
-// Function to handle collecting the key and unlocking the door
-afterInput(() => {
-  let playerSprite = getFirst(player);
-  let keySprites = getTile(playerSprite.x, playerSprite.y).filter(sprite => sprite.type === key);
-  let doorSprites = getTile(playerSprite.x, playerSprite.y).filter(sprite => sprite.type === door);
-
-  // If player collects the key
-  if (keySprites.length > 0) {
-    keySprites.forEach(keySprite => {
-      keySprite.remove(); // Remove the key sprite from the map
-    });
-
-    // Find and unlock the door
-    doorSprites.forEach(doorSprite => {
-      doorSprite.type = grass; // Change the door sprite to grass, making it passable
-    });
-
-    addText("Door unlocked!", { y: 6, color: color`2` });
-  }
-});
-
-
 // makes sprite solid
 setSolids([ player, ball, hurdle, bounds]); 
 
@@ -355,6 +326,8 @@ onInput("a", () => {
 onInput("s", () => {
     getFirst(player).y += 1;
     });
+
+
 
 // reset button
 onInput("j", () => {
