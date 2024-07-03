@@ -11,6 +11,8 @@ const goalpost = "g";
 const hurdle = "w";
 const grass = "l";
 const bounds = "e";
+const key = "k";
+const door = "d";
 
 //legend
 setLegend(
@@ -116,6 +118,7 @@ DDDDDDDDDDDDDDDD
 DDDDDDDDDDDDDDDD
 DDDDDDDDDDDDDDDD
 DDDDDDDDDDDDDDDD`]
+TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
 );
 
 
@@ -302,6 +305,32 @@ afterInput(() => {
         }
     }
 });
+
+
+
+
+
+// Function to handle collecting the key and unlocking the door
+afterInput(() => {
+  let playerSprite = getFirst(player);
+  let keySprites = getTile(playerSprite.x, playerSprite.y).filter(sprite => sprite.type === key);
+  let doorSprites = getTile(playerSprite.x, playerSprite.y).filter(sprite => sprite.type === door);
+
+  // If player collects the key
+  if (keySprites.length > 0) {
+    keySprites.forEach(keySprite => {
+      keySprite.remove(); // Remove the key sprite from the map
+    });
+
+    // Find and unlock the door
+    doorSprites.forEach(doorSprite => {
+      doorSprite.type = grass; // Change the door sprite to grass, making it passable
+    });
+
+    addText("Door unlocked!", { y: 6, color: color`2` });
+  }
+});
+
 
 // makes sprite solid
 setSolids([ player, ball, hurdle, bounds]); 
