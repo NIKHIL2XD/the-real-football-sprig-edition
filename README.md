@@ -19,3 +19,10 @@ Update 1: Now you need to complete all level in a limited time, otherwise you wi
 
 Press W,S,A,D to move up down left right, J to restart, Push the ball through the hurdles to the goal 
 <!-- Example: Press WASD to move, J to restart and K to toggle trails, Get A boxes (cyan) to A goals (green), Get B boxes (magenta) to B goals (red), Get normal boxes (gray) to either goal. (from [Sokoban plus](https://sprig.hackclub.com/gallery/sokoban_plus)) -->
+
+## Images
+
+- ![Img](https://cloud-2oonc7xny-hack-club-bot.vercel.app/0screenshot_2024-09-13_at_12.53.05___am.png)
+
+- ![Img](https://cloud-2oonc7xny-hack-club-bot.vercel.app/1screenshot_2024-09-13_at_12.53.38___am.png)
+
